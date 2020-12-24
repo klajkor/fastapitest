@@ -5,7 +5,7 @@ from models.location import Location
 
 
 async def get_live_report(location: Location):
-    url = f'https://weather.talkpython.fm/api/weather?city={location.city}&country={location.country}&units=imperial'
+    url = f'https://weather.talkpython.fm/api/weather?city={location.city}&country={location.country}&units=metric'
     if location.state:
         url += f'&state={location.state}'
 

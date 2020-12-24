@@ -4,7 +4,7 @@ from models import location
 from models.location import Location
 
 
-async def get_live_report(loc: Location):
+async def get_live_report(location: Location):
     url = f'https://weather.talkpython.fm/api/weather?city={location.city}&country={location.country}&units=imperial'
     if location.state:
         url += f'&state={location.state}'
@@ -12,3 +12,6 @@ async def get_live_report(loc: Location):
     async with httpx.AsyncClient() as client:
         resp = await client.get(url)
         resp.raise_for_status()
+        resp_data = resp.json()
+
+    return resp_data

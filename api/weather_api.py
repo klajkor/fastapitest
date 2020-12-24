@@ -5,21 +5,14 @@ import httpx
 
 from models.location import Location
 from models.umbrella_status import UmbrellaStatus
+from services import live_weather_service
 
 router = fastapi.APIRouter()
 
 
 @router.get('/api/umbrella', response_model=UmbrellaStatus)
 async def do_i_need_an_umbrella(location: Location = fastapi.Depends()):
-    url = f'https://weather.talkpython.fm/api/weather?city={location.city}&country={location.country}&units=imperial'
-    if location.state:
-        url += f'&state={location.state}'
-
-    async with httpx.AsyncClient() as client:
-        resp = await client.get(url)
-        resp.raise_for_status()
-        resp_data = resp.json()
-
+    resp_data = await live_weather_service.get_live_report(location)
     weather = resp_data.get('weather', {})
     category = weather.get('category', 'UNKNOWN')
     forecast = resp_data.get('forecast', {})

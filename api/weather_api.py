@@ -18,16 +18,15 @@ async def do_i_need_an_umbrella(location: Location = fastapi.Depends()):
     async with httpx.AsyncClient() as client:
         resp = await client.get(url)
         resp.raise_for_status()
-        data = resp.json
+        resp_data = resp.json()
 
-    weather = data.get('weather', {})
+    weather = resp_data.get('weather', {})
     category = weather.get('category', 'UNKNOWN')
-    forecast = data.get('forecast', {})
+    forecast = resp_data.get('forecast', {})
     temp = forecast.get('temp', 0.0)
 
-    bring = category.lower().strip() == 'rain'
+    bring = category.lower().strip() in {'rain', 'mist'}
 
-    umbrella = UmbrellaStatus(bring_umbrella=bring, temp=temp)
+    umbrella = UmbrellaStatus(bring_umbrella=bring, temp=temp, weather=category)
 
-    print(data)
     return umbrella

@@ -4,9 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-uvicorn = "*"
-fastapi = "*"
-starlette = "*"
+fastapi = "0.62.0"
+uvicorn = "0.13.1"
+starlette = "0.13.6"
 jinja2 = "*"
 pydantic = "*"
 httpx ="*"

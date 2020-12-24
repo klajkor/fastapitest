@@ -6,6 +6,10 @@ name = "pypi"
 [packages]
 uvicorn = "*"
 fastapi = "*"
+starlette = "*"
+jinja2 = "*"
+pydantic = "*"
+httpx ="*"
 
 [dev-packages]
 
